@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Créer un billet et une critique</h2>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <fieldset>
+            <legend>Billet</legend>
+
+            <div>
+                <label>Titre</label>
+                {{ ticket_form.title }}
+                {{ ticket_form.title.errors }}
+            </div>
+
+            <div>
+                <label>Description</label>
+                {{ ticket_form.description }}
+                {{ ticket_form.description.errors }}
+            </div>
+
+            <div>
+                <label>Image</label>
+                {{ ticket_form.image }}
+                {{ ticket_form.image.errors }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Critique</legend>
+
+            <div>
+                <label>Note</label>
+                {{ review_form.rating }}
+                {{ review_form.rating.errors }}
+            </div>
+
+            <div>
+                <label>Accroche</label>
+                {{ review_form.headline }}
+                {{ review_form.headline.errors }}
+            </div>
+
+            <div>
+                <label>Corps</label>
+                {{ review_form.body }}
+                {{ review_form.body.errors }}
+            </div>
+        </fieldset>
+
+        <button type="submit">Publier</button>
+        <a href="{% url 'feed' request.user.username %}">Annuler</a>
+    </form>
+
+{% endblock %}

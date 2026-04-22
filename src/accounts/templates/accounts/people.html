@@ -1,0 +1,55 @@
+{% load static %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Gérer mes abonnements</h2>
+
+    <section>
+        <label for="username-search">Nom d'utilisateur</label>
+        <div class="autocomplete-wrapper">
+            <input type="text" id="username-search" autocomplete="off" placeholder="Rechercher un utilisateur">
+            <div id="suggestions" class="suggestions-box"></div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Utilisateurs suivis</h3>
+        <ul>
+            {% for user in followed_users %}
+                <li>
+                    <a href="{% url 'feed' user.username %}">@{{ user.username }}</a>
+                    <form action="{% url 'unfollow_user' user.username %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Se désabonner</button>
+                    </form>
+                </li>
+            {% empty %}
+                <li>Tu ne suis encore personne.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section>
+        <h3>Autres utilisateurs</h3>
+        <ul>
+            {% for user in other_users %}
+                <li>
+                    <a href="{% url 'feed' user.username %}">@{{ user.username }}</a>
+                    <form action="{% url 'follow_user' user.username %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">S'abonner</button>
+                    </form>
+                </li>
+            {% empty %}
+                <li>Aucun autre utilisateur disponible.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <script>
+        const SEARCH_USERS_URL = "{% url 'search_users' %}";
+    </script>
+    <script src="{% static 'js/autocomplete.js' %}"></script>
+
+{% endblock %}

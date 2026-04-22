@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Modifier la critique</h2>
+
+    <p>
+        Billet concerné :
+        <strong>{{ review.ticket.title }}</strong>
+    </p>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <div>
+            <label>Note</label>
+            {{ form.rating }}
+            {{ form.rating.errors }}
+        </div>
+
+        <div>
+            <label>Accroche</label>
+            {{ form.headline }}
+            {{ form.headline.errors }}
+        </div>
+
+        <div>
+            <label>Corps</label>
+            {{ form.body }}
+            {{ form.body.errors }}
+        </div>
+
+        <button type="submit">Enregistrer</button>
+        <a href="{% url 'ticket_detail' review.ticket.id %}">Annuler</a>
+    </form>
+
+{% endblock %}

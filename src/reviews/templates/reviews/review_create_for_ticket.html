@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Rédiger une critique</h2>
+
+    <div>
+        <p><strong>Billet :</strong> {{ ticket.title }}</p>
+        <p>par @{{ ticket.user.username }}</p>
+    </div>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <div>
+            <label>Note (0 à 5)</label>
+            {{ form.rating }}
+            {{ form.rating.errors }}
+        </div>
+
+        <div>
+            <label>Accroche (champ optionnel)</label>
+            {{ form.headline }}
+            {{ form.headline.errors }}
+        </div>
+
+        <div>
+            <label>Corps de la critique</label>
+            {{ form.body }}
+            {{ form.body.errors }}
+        </div>
+
+        <button type="submit">Publier</button>
+        <a href="{% url 'ticket_detail' ticket.id %}">Annuler</a>
+    </form>
+
+{% endblock %}

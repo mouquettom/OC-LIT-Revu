@@ -1,0 +1,56 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LIT-Revu</title>
+
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %} {% endblock %}
+</head>
+
+<body>
+
+    <header>
+        <h1>LIT-Revu</h1>
+
+        <nav>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'feed' request.user.username %}">Flux</a> |
+                <a href="{% url 'people' %}">Utilisateurs</a> |
+                <a href="{% url 'ticket_create' %}">Nouveau billet</a> |
+                <a href="{% url 'review_pick_ticket' %}">Critiquer un billet</a> |
+                <a href="{% url 'review_create_with_ticket' %}">Billet + critique</a> |
+                <a href="{% url 'logout' %}">Déconnexion</a>
+            {% else %}
+                <a href="{% url 'login' %}">Se connecter</a>
+                <a href="{% url 'signup' %}">S'inscrire</a>
+            {% endif %}
+        </nav>
+        <hr>
+    </header>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <main class="container">
+        <!-- Page HTML -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- JS -->
+    {% block extra_js %}{% endblock %}
+
+</body>
+
+</html>

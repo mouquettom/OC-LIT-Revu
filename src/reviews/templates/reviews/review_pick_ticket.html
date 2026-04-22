@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Choisir un billet à critiquer</h2>
+
+    <ul>
+        {% for ticket in tickets %}
+            <li>
+                <a href="{% url 'review_create_for_ticket' ticket.id %}">
+                    {{ ticket.title }}
+                </a>
+                — @{{ ticket.user.username }}
+            </li>
+        {% empty %}
+            <li>Aucun billet disponible à critiquer pour le moment.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

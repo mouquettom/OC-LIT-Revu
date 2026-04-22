@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Créer un billet</h2>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div>
+            <label>Titre</label>
+            {{ form.title }}
+            {{ form.title.errors }}
+        </div>
+
+        <div>
+            <label>Description</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+
+        <div>
+            <label>Image</label>
+            {{ form.image }}
+            {{ form.image.errors }}
+        </div>
+
+        <button type="submit">Publier</button>
+    </form>
+
+{% endblock %}

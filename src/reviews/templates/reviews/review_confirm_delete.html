@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Supprimer la critique</h2>
+
+    <p>Confirmer la suppression de cette critique ?</p>
+
+    <blockquote>
+        {% if review.headline %}
+            <p><strong>{{ review.headline }}</strong></p>
+        {% endif %}
+        <p>Note : {{ review.rating }}/5</p>
+        <p>{{ review.body|linebreaks }}</p>
+    </blockquote>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Oui, supprimer</button>
+        <a href="{% url 'ticket_detail' review.ticket.id %}">Annuler</a>
+    </form>
+
+{% endblock %}

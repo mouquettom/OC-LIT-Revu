@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load review_extras %}
+
+{% block content %}
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <section>
+        <p>
+            <strong>@{{ profile_user.username }}</strong><br>
+            {{ profile_user.followers.count }} abonné{{ profile_user.followers.count|pluralize }} -
+            {{ profile_user.followings.count }} abonnement{{ profile_user.followings.count|pluralize }}
+        </p>
+
+        {% if not is_own_feed %}
+            {% if is_followed %}
+                <form action="{% url 'unfollow_user' profile_user.username %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Se désabonner</button>
+                </form>
+            {% else %}
+                <form action="{% url 'follow_user' profile_user.username %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">S'abonner</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </section>
+
+    <h2>Flux</h2>
+
+    {% for item in items %}
+        {% with model=item|model_name %}
+            {% if model == "ticket" %}
+                <article>
+                    <h3>Billet • @{{ item.user.username }}</h3>
+                    <p><strong>{{ item.title }}</strong></p>
+
+                    {% if item.image %}
+                        <p>
+                            <img src="{{ item.image.url }}" alt="{{ item.title }}" style="max-width: 400px;">
+                        </p>
+                    {% endif %}
+
+                    {% if item.description %}
+                        <p>{{ item.description|linebreaksbr }}</p>
+                    {% endif %}
+
+                    <p>{{ item.created_at|date:"d/m/Y H:i" }}</p>
+
+                    <p>
+                        <a href="{% url 'ticket_detail' item.id %}">Voir le billet</a>
+                        {% if item.user_id != request.user.id and item.id not in reviewed_ids %}
+                            |
+                            <a href="{% url 'review_create_for_ticket' item.id %}">Répondre à ce billet</a>
+                        {% endif %}
+                    </p>
+
+                    {% if item.user_id == request.user.id %}
+                        <p>
+                            <a href="{% url 'ticket_edit' item.id %}">Modifier</a> |
+                            <a href="{% url 'ticket_delete' item.id %}">Supprimer</a>
+                        </p>
+                    {% endif %}
+                </article>
+                <hr>
+
+            {% elif model == "review" %}
+                <article>
+                    <h3>Critique • @{{ item.user.username }}</h3>
+
+                    {% if item.headline %}
+                        <p><strong>{{ item.headline }}</strong></p>
+                    {% endif %}
+
+                    <p>Note : <strong>{{ item.rating }}/5</strong></p>
+                    <p>{{ item.body|linebreaksbr }}</p>
+                    <p>{{ item.created_at|date:"d/m/Y H:i" }}</p>
+
+                    <p>
+                        Pour le billet :
+                        <a href="{% url 'ticket_detail' item.ticket.id %}">{{ item.ticket.title }}</a>
+                        — @{{ item.ticket.user.username }}
+                    </p>
+
+                    {% if item.user_id == request.user.id %}
+                        <p>
+                            <a href="{% url 'review_edit' item.id %}">Modifier</a> |
+                            <a href="{% url 'review_delete' item.id %}">Supprimer</a>
+                        </p>
+                    {% endif %}
+                </article>
+                <hr>
+            {% endif %}
+        {% endwith %}
+    {% empty %}
+        <p>Aucune activité pour l'instant.</p>
+    {% endfor %}
+
+{% endblock %}
