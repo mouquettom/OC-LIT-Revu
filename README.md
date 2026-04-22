@@ -40,7 +40,7 @@ src/
 ### 1. Cloner le projet
 ```bash
 git clone https://github.com/mouquettom/OC-LIT-Revu.git
-cd OC-LIT-Revu/src
+cd OC-LIT-Revu/
 ```
 
 ### 2. Créer et activer un environnement virtuel
@@ -64,6 +64,7 @@ python -m pip install -r requirements.txt
 
 ### 4. Créer les migrations et lancer le serveur
 ```bash
+cd src/
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
