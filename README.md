@@ -1,87 +1,107 @@
 # LIT-Revu
 
-Application web Django permettant de publier des demandes de critiques (billets), d’écrire des critiques en réponse, de suivre d’autres utilisateurs et de consulter un flux personnalisé.
+Django web application for publishing review requests (tickets), writing
+reviews in response, following other users, and browsing a personalized
+feed.
 
-## Fonctionnalités
+## Description
 
-- Inscription, connexion, déconnexion
-- Création, modification et suppression de billets
-- Création, modification et suppression de critiques
-- Création d’un billet + critique en une seule étape
-- Système d’abonnement entre utilisateurs
-- Flux personnalisé
-- Recherche/autocomplete d’utilisateurs
+LITRevu is a web application built with Django that allows users to
+request and publish book or article reviews, interact with other users
+through a following system, and access a personalized content feed.
 
-## Choix techniques
+------------------------------------------------------------------------
 
-- Python
-- Django
-- SQLite
-- HTML / CSS / JavaScript
-- Git / GitHub
+## Features
 
-## Architecture du projet
+-   User registration, login, and logout
+-   Create, update, and delete tickets
+-   Create, update, and delete reviews
+-   Create a ticket and a review in a single step
+-   User following system
+-   Personalized feed
+-   User search and autocomplete
 
-```text
-src/
-    accounts/   # utilisateurs, authentification, abonnements
-    tickets/    # billets [demandes de critiques]
-    reviews/    # critiques + flux personnalisé
-    templates/  # HTML
-    static/     # CSS / JS
-    LIT_Revu/   # settings — projet
-    manage.py   # point d'entrée
-    db.sqlite3  # base de données
-    README.md   
-```
+------------------------------------------------------------------------
 
-## Installation locale
+## Technologies Used
 
-### 1. Cloner le projet
-```bash
-git clone https://github.com/mouquettom/OC-LIT-Revu.git
-cd OC-LIT-Revu/
-```
+-   Python
+-   Django
+-   SQLite
+-   HTML / CSS / JavaScript
+-   Git / GitHub
 
-### 2. Créer et activer un environnement virtuel
+------------------------------------------------------------------------
+
+## Project Structure
+
+    src/
+        accounts/   # users, authentication, and following system
+        tickets/    # tickets [review requests]
+        reviews/    # reviews and personalized feed
+        templates/  # HTML templates
+        static/     # CSS / JavaScript
+        LIT_Revu/   # Django project settings
+        manage.py   # application entry point
+        db.sqlite3  # database
+        README.md
+
+------------------------------------------------------------------------
+
+## Local Installation
+
+### 1. Clone the Repository
+
+    git clone https://github.com/mouquettom/lit-revu.git
+    cd lit-revu
+
+### 2. Create and Activate a Virtual Environment
+
 #### macOS / Linux
-```bash
-python3 -m venv .env
-source .env/bin/activate
-```
+
+    python3 -m venv .env
+    source .env/bin/activate
 
 #### Windows PowerShell
-```powershell
-py -m venv .env
-.env\Scripts\Activate.ps1
-```
 
-### 3. Installer les dépendances
-```bash
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
+    py -m venv .env
+    .env\Scripts\Activate.ps1
 
-### 4. Créer les migrations et lancer le serveur
-```bash
-cd src/
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
-```
+### 3. Install Dependencies
 
-## Annexes
+    python -m pip install --upgrade pip
+    python -m pip install -r requirements.txt
 
-Le projet utilise un dossier `media/` pour stocker les images uploadées pour les billets.
-Si le dossier n'existe pas déjà, il sera alors créé lorsque vous allez uploader votre 
-première image lors de la création d'un billet. Si vous supprimez un billet contenant 
-une image uploadée, l'image sera également supprimée de la base de données.
+### 4. Create Migrations and Run the Server
 
-### Commande utile
+    cd src/
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py runserver
 
-Créer un superutilisateur :
-```bash
-python manage.py createsuperuser
-```
+------------------------------------------------------------------------
 
-@tommouquet
+## Additional Information
+
+The project uses a `media/` directory to store images uploaded for
+tickets. If the directory does not already exist, it will be created
+when the first image is uploaded while creating a ticket.
+
+When a ticket containing an uploaded image is deleted, the associated
+image is also removed.
+
+### Useful Command
+
+Create a superuser:
+
+    python manage.py createsuperuser
+
+------------------------------------------------------------------------
+
+## Author
+
+@tom_mouquet
+
+Project developed as part of the OpenClassrooms **Développeur
+d'application Python** training program.
